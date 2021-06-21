@@ -1,0 +1,66 @@
+body.m_lock {
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 51;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: all 0.8s ease 0s;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal.active .modal__content {
+    opacity: 1;
+    transform: translate(0px, 0px);
+}
+
+.modal__body {
+    min-height: calc(100% - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 10px;
+}
+
+.modal__content {
+    background-color: #fff;
+    max-width: 480px;
+    min-width: 400px;
+    min-height: 320px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 8px;
+
+    position: relative;
+
+    transition: all 0.8s ease 0s;
+    opacity: 0;
+    transform: translate(0px, -100%);
+}
+
+.modal__close {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 8px;
+    top: -48px;
+    height: 24px;
+    width: 24px;
+    background: url(../img/close-ico.svg) center center / contain no-repeat;
+}

@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: Montserrat;
+    color: #222;
+}
+
+body {
+    background: url(../img//logo.png) center center / contain no-repeat;
+}
+
+.block {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.87);
+}
+
+.block__body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.block__header {
+    margin: 20px 0;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    background: linear-gradient(93.76deg, #355CFF 4.88%, #A116E7 93.78%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.block__msg {
+    padding: 0px 20px;
+    height: 28px;
+    width: calc(100% - 40px);
+    text-align: center;
+}
+
+p {
+    width: 70%;
+    text-align: center;
+}
+
+.block__content {
+    background: white;
+    border-radius: 30px;
+    min-height: 280px;
+    min-width: 300px;
+    max-width: 352px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.block__form {
+    flex: 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    margin: 20px 0;
+}
+
+.block_success {
+    flex: 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    margin: 20px 0;
+}
+
+.group {
+    display: flex;
+    align-self: stretch;
+    justify-content: space-around;
+}
+
+.block__back, .block__submit {
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 24px;
+    padding: 8px 16px;
+    background: white;
+    transition: all 0.3s ease 0s;
+    color: #222;
+}
+
+.block__back:hover, .block__submit:hover {
+    color: white;
+    background: linear-gradient(93.76deg, #355CFF 4.88%, #A116E7 93.78%);
+}
+
+input {
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #999999;
+    outline: none;
+}

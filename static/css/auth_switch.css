@@ -1,0 +1,46 @@
+.auth_switch,
+.log_block,
+.reg_block {
+    width: calc(100% - 16px);
+    display: flex;
+    align-items: center;
+}
+
+.auth_switch {
+    flex: 0 1;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.log_block,
+.reg_block {
+    flex: 1;
+    justify-content: space-around;
+}
+
+.auth_switch_ratio {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    color: #999999;
+}
+
+.auth_switch_ratio.active {
+    background: linear-gradient(97.18deg, #355CFF 4.88%, #A116E7 93.78%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#auth_switch_1 {
+    margin-right: 24px;
+}
+
+.d-none_1 {
+    display: none;
+}
+
+.d-none_2 {
+    display: none;
+}

@@ -1,0 +1,136 @@
+.content_main_parallax {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.content_main_parallax__1 {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #fff;
+
+    position: absolute;
+    top: 64%;
+    left: 68.75%;
+}
+
+.content_main_parallax__2 {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background-color: #fff;
+    background: url(../img/main-prlx-2.png) center center / contain no-repeat;
+
+    position: absolute;
+    top: 44px;
+    left: 70%;
+}
+
+.content_main_parallax__3 {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #fff;
+    background: url(../img/main-prlx-3.png) center center / contain no-repeat;
+
+    position: absolute;
+    top: 25%;
+    right: 100px;
+}
+
+.content_main_parallax__4 {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #fff;
+    background: url(../img/main-prlx-4.png) center center / contain no-repeat;
+
+    position: absolute;
+    bottom: 30px;
+    left: 20%;
+}
+
+.content_main_parallax__5 {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    background-color: #fff;
+    background: url(../img/main-prlx-5.png) center center / contain no-repeat;
+
+    position: absolute;
+    top: 108px;
+    left: 24px;
+}
+
+@media (max-width: 1100px) {
+    .content_main_parallax {
+        display: none;
+    }
+}
+
+.content_how_parallax {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.content_how_parallax__1 {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #fff;
+
+    position: absolute;
+    bottom: 266px;
+    left: 112px;
+}
+
+.content_how_parallax__2 {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    background-color: #fff;
+    background: url(../img/main-prlx-5.png) center center / contain no-repeat;
+
+    position: absolute;
+    bottom: 100px;
+    left: -56px;
+}
+
+.content_how_parallax__3 {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+
+    position: absolute;
+    bottom: 334px;
+    left: 48px;
+}
+
+.content_how_parallax__4 {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    background-color: #fff;
+    background: url(../img/how-prlx-4.png) center center / contain no-repeat;
+
+    position: absolute;
+    top: 200px;
+    right: 126px;
+}
+
+@media (max-width: 1100px) {
+    .content_how_parallax {
+        display: none;
+    }
+}

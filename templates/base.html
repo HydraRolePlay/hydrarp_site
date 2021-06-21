@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="{{img}}fav.png">
+    <title>{{main_header}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{{main_desc}}">
+    <!-- FONT 
+    -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.2.1/font-awesome-animation.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(69868636, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/69868636" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    {% block mainStyles %}
+    {% endblock %}
+    
+    <link rel="stylesheet" href="{{css}}header-style.css">
+    <link rel="stylesheet" href="{{css}}footer-style.css">
+    <link rel="stylesheet" href="{{css}}modal.css">
+
+    {% if not current_user.is_authenticated %}
+    <style>
+        .reg_block__form, .log_block__form {
+            display: flex;
+        }
+    </style>
+    <link rel="stylesheet" href="{{css}}auth_switch.css">
+    {% endif %}    
+</head>
+<body>
+    <div id='recaptcha' class="g-recaptcha"
+          data-sitekey="6LefcOwZAAAAAPvnkgmz86Q2gmetB1z_vf1QevkI"
+          data-callback="captcha"
+          data-size="invisible" style="opacity: 0 !important"></div>
+    <input type="hidden" class="captcha_key" style="opacity: 0 !important;">
+    <script>
+        function onloadCallback() {
+          grecaptcha.execute();
+        }
+        function captcha(token){
+            $('.captcha_key').val(token)
+        }
+    </script>
+    <script src="{{js}}alerts.js"></script>
+    {% if current_user.is_authenticated %}
+    <script src="{{js}}check_user.js"></script>
+    {% endif %}
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback"
+        async defer>
+    </script>
+    {% include 'navbar.html' %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'footer.html' %}
+
+    {% block modals %}
+    {% endblock %}
+    
+    {% if not current_user.is_authenticated %}
+
+    <div id="auth_modal" class="modal" style="z-index: 10000;">
+        <div class="modal__body">
+            <div class="modal__content">
+                <span class="modal__close"></span>
+                <div class="auth_switch">
+                    <div id="auth_switch_1" class="auth_switch_ratio active">Вход</div>
+                    <div id="auth_switch_2" class="auth_switch_ratio">Регистрация</div>
+                </div>
+                <div class="log_block active">
+                    <form action="" method="POST" class="log_block__form">
+                        <div class="log_block__message block__msg"></div>
+                        <p class="log_block__label">E-mail / Логин</p>
+                        <input name="login" type="text" class="log_block__input" placeholder="Введите данные для входа">
+                        <p class="log_block__label">Пароль</p>
+                        <input name="password" type="password" class="log_block__input" placeholder="Введите ваш пароль">
+                        <div class="log_block__submit main-page-btn" id="signin">Войти на сайт</div>
+                        <label for="input[name='remember']" style="font-style: normal;font-weight: normal;font-size: 16px;line-height: 24px;font-feature-settings: 'ss01' on;color: #666666;"><input name='remember' type="checkbox"> Запомнить меня</label>
+                    </form>
+                </div>
+                <div class="reg_block">
+                    <form action="" method="POST" class="reg_block__form reg_block__form_1 d-none_1">
+                        <div class="reg_block__message block__msg"></div>
+                        <p class="reb_block__label" >E-mail</p>
+                        <input name="email" type="text" class="reg_block__input" placeholder="Введите эл. почту">
+                        <p class="reb_block__label" >Логин</p>
+                        <input name="login" type="text" class="reg_block__input" placeholder="Придумайте логин">
+                        <p class="reb_block__label">Пароль</p>
+                        <input name="password1" type="password" class="reg_block__input" placeholder="Введите пароль">
+                        <p class="reb_block__label">Повтор пароля</p>
+                        <input name="password2" type="password" class="reg_block__input" placeholder="Повторите пароль">
+                        <div class="reg_block__submit main-page-btn" id="signup">Создать аккаунт</div>
+                    </form>
+                    <form action="" method="POST" class="reg_block__form reg_block__form_2 d-none_1 d-none_2">
+                        <p class="reb_block__label">Введите код подтверждения</p>
+                        <input name="code" type="text" class="reg_block__input" placeholder="Код">
+                        <div class="block__btn-group">
+                            <div class="reg_block__back main-page-btn">Отменить</div>
+                            <div class="reg_block__forward main-page-btn">Продолжить</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- JQ -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+        function toggleModal(modal) {
+            $('body').toggleClass('m_lock');
+            modal.toggleClass('active');
+        }
+        setInterval(()=>{
+            grecaptcha.reset();
+            grecaptcha.execute();
+        }, 30000);
+    </script>
+
+    <style>
+        @keyframes loading {
+            20% {
+                background: #355CFF;
+            }
+            50% {
+                background: #A116E7;
+            }
+            70% {
+                background: #A116E7;
+            }
+            100% {
+                background: #355CFF;
+            }
+        }
+        .loading_msg {
+            animation: loading 3s ease alternate infinite;
+        }
+    </style>
+
+    {% if not current_user.is_authenticated %}
+    <style>
+        label:before{
+            content: "";
+            background: linear-gradient(91.37deg, #355CFF 4.88%, #A116E7 93.78%) !important;
+        }
+        .block__msg {
+            min-height: 28px;
+            width: 100%;
+            margin: -16px 8px 4px 8px;
+            text-align: center;
+            display: none;
+        }
+        .log_block, .reg_block {
+            flex: 1 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .log_block__form, .reg_block__form {
+            flex: 1 0;
+
+            /*display: flex;*/
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+        form>p {
+            width: 70%;
+            text-align: center;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 18px;
+            margin-bottom: 5px;
+        }
+
+        .reg_block__input, .log_block__input {
+            font-family: 'Montserrat';
+            border: 1px solid #CCCCCC;
+            box-sizing: border-box;
+            border-radius: 30px;
+            padding: 16px;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 20px;
+            color: #999999;
+            outline: none;
+            margin-bottom: 16px;
+            width: 90%;
+        }
+
+        .block__btn-group {
+            display: flex;
+            align-self: stretch;
+            justify-content: space-around;
+        }
+
+        .reg_block__back, .reg_block__forward, .reg_block__submit, .log_block__submit {
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 50px;
+            padding: 16px 28px 16px 52px;
+            margin: 8px 0;
+            color: white;
+            background: linear-gradient(93.76deg, #355CFF 4.88%, #A116E7 93.78%);
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 0.05em;
+
+            position: relative;
+        }
+        .reg_block__back, .reg_block__forward{
+            font-size: 12px;
+        }
+        .reg_block__back:after, .reg_block__forward:after, .reg_block__submit:after, .log_block__submit:after {
+            content: '';
+            background: url({{img}}accept-ico.svg) center center / contain no-repeat;
+            position: absolute;
+            width: 18px;
+            height: 15px;
+            top: 20px;
+            left: 28px;
+        }
+        .reg_block__back:after, .reg_block__forward:after{
+            top: 16px;
+        }
+        .lob_block__changepassword {
+            font-size: 12px;
+            margin-top: -16px;
+            margin-bottom: 20px;
+        }
+        .main-page-btn {
+            text-decoration: none;
+            transition: transform 0.3s ease 0s;
+        }
+
+        .main-page-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .main-page-btn:active {
+            transform: scale(0.9);
+        }
+    </style>
+
+    <script>
+        // toggle Anim
+        function toggleAnimation() {
+            $('.block__msg').css('display', 'none');
+            $('.block__msg').text('');
+            $('.block__msg').toggleClass('loading_msg');
+        }
+
+        // Auth_switch
+        $('.auth_switch_ratio').on('click', function(e) {
+            if (!$(e.target).hasClass('active')) {
+                $('.auth_switch_ratio').toggleClass('active');
+                $('.reg_block__form,.log_block__form').toggleClass('d-none_1');
+            }
+        });
+
+        // Open the modal
+        $('.header__sign-button').on('click', function() {
+            toggleModal($('#auth_modal'));
+        });
+
+        // Close the modal
+        $('#auth_modal>.modal__body>.modal__content>.modal__close').on('click', function() {
+            toggleModal($('#auth_modal'));
+        });
+        /*
+        $('#auth_modal>.modal__body').on('click', function(e) {
+            if (!e.target.closest('.modal__content')) {
+                toggleModal($('#auth_modal'));
+            }
+        });
+        */
+        // Handle data with AJAX
+        function toggleReg() {
+            $('.reg_block__form').toggleClass('d-none_2');
+        }
+        $('.reg_block__submit.main-page-btn').on('click', function(){
+            go_reg()
+        });
+        $('.log_block__submit.main-page-btn').on('click', function(){
+            go_auth()
+        });
+        setInterval(()=>{
+            grecaptcha.reset();
+            grecaptcha.execute();
+        }, 10000);
+        function removeUser() {
+            login = $('.reg_block__form').serialize().split('&')[1];
+            $.ajax({
+                url:        '/handleremove',
+                type:       'POST',
+                data:       login,
+                success:    function(response) {
+                    //var result = JSON.parse(response);
+                },
+                error:      function(response, exception) {
+
+                },
+            });
+        }
+        function go_auth(){
+            if ($('.log_block__input').val().trim() !== '') {
+                toggleAnimation();
+                $.ajax({
+                    url:        '/handlelogin',
+                    type:       'POST',
+                    data:       $('.log_block__form').serialize() + '&secret=' + $('.captcha_key').val(),
+                    success:    function(response) {
+                        // waiting animation
+                        toggleAnimation();
+                        // process
+                        var result = JSON.parse(response);
+
+                        if (result['state'] === 'success') {
+                            // log in user (if it hasn't done yet)
+                            // reload page
+                            history.pushState(null, null, '/profile');
+                            //window.location.href = window.location.href + '/profile';
+                            window.location.reload(true);
+                        } else {
+                            $('.block__msg')[0].style.display = "block";
+                            $('.block__msg')[0].style.color = 'red';
+                            // echo error ($ = res[msg] look down the code)
+                        }
+                        $('.log_block__message').text(result['msg']);
+                        grecaptcha.reset();
+                        grecaptcha.execute();
+                    },
+                    error:      function(response, exception) {
+                        toggleAnimation();
+                        customAlertFunc(0, "Простите, возникла ошибка на стороне сервера. Попробуйте еще раз.");
+                        grecaptcha.reset();
+                        grecaptcha.execute();
+                    },
+                });
+            } else {
+                $('.block__msg')[0].style.display = "block";
+                $('.block__msg')[0].style.color = 'red';
+                $('.log_block__message').text('Заполните поля');
+            }
+        };
+        function go_reg(token){
+            if ($('.reg_block__form_1>.reg_block__input').val().trim() !== '') {
+                toggleAnimation();
+                $.ajax({
+                    url:        '/handlesignin',
+                    type:       'POST',
+                    data:       $('.reg_block__form_1').serialize() + '&secret=' + $('.captcha_key').val(),
+                    success:    function(response) {
+                        // waiting animation
+                        toggleAnimation();
+                        // handle page closing and page reloading
+                        window.onbeforeunload = function(e) {
+                            // delete
+                            removeUser();
+                            // ....
+                            var e = e || window.event;
+                            if (e) {
+                                e.returnValue = "Leaving the page";
+                            }
+                            return "Leaving the page";
+                        };
+
+                        // process
+                        var result = JSON.parse(response);
+
+                        if (result['state'] === 'confirm') {
+                            // switch reg_block on verify_block
+                            toggleReg();
+                        } else {
+                            $('.block__msg')[1].style.display = "block";
+                            $('.block__msg')[1].style.color = 'red';
+                            // echo error ($ = res[msg] look down the code)
+                        }
+                        $('.reg_block__form_1>.reg_block__message').text(result['msg']);
+                        grecaptcha.reset();
+                        grecaptcha.execute();
+                    },
+                    error:      function(response, exception) {
+                        toggleAnimation();
+                        customAlertFunc(0, "Простите, возникла ошибка на стороне сервера. Попробуйте еще раз.");
+                        grecaptcha.reset();
+                        grecaptcha.execute();
+                    },
+                });
+            } else {
+                $('.block__msg')[1].style.display = "block";
+                $('.block__msg')[1].style.color = 'red';
+                $('.reg_block__form_1>.reg_block__message').text('Заполните поля');
+            }
+        };
+
+
+        $('.reg_block__forward').on('click', function(e) {
+            if ($('.reg_block__form_2>.reg_block__input').val().trim() !== '') {
+                toggleAnimation();
+                login = $('.reg_block__form_1').serialize().split('&')[1];
+                $.ajax({
+                    url:        '/handleconfirm',
+                    type:       'POST',
+                    data:       login + '&' + $('.reg_block__form_2').serialize(),
+                    success:    function(response) {
+                        // waiting animation
+                        toggleAnimation();
+                        // process
+                        var result = JSON.parse(response);
+
+                        if (result['state'] === 'success') {
+                            // reload page
+                            //window.location.href=window.location.href;
+                            window.location.reload(true);
+                            $('.block__msg')[2].style.color = 'green';
+                        } else {
+                            $('.block__msg')[2].style.display = "block";
+                            $('.block__msg')[2].style.color = 'red';
+                            // echo error ($ = res[msg] look down the code)
+                        }
+                        $('.reg_block__form_2>.reg_block__message').text(result['msg']);
+                    },
+                    error:      function(response, exception) {
+                        toggleAnimation();
+                        customAlertFunc(0, "Неправильный код подтверждения");
+                    },
+                });
+            } else {
+                $('.block__msg')[2].style.display = "block";
+                $('.block__msg')[2].style.color = 'red';
+                $('.reg_block__form_2>.reg_block__message').text('Заполните поля');
+            }
+        });
+
+
+        $('.reg_block__back').on('click', function(e) {
+            $('.block__msg').css('display', 'none');
+            $('.block__msg').text('');
+            removeUser();
+            toggleReg();
+        });
+    </script>
+    {% endif %}
+
+    {% block mainScripts %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,410 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.for_menu_object {
+    position: absolute;
+    left: 0;
+    top: -80px;
+
+    width: 0;
+    height: 0;
+}
+html {
+    scroll-behavior: smooth;
+}
+.layer {
+    width: 100%;
+    height: 100%;
+}
+</style>
+<main class="content" style="overflow-x: hidden;">
+    <section class="content_main fullscreen" style="display: flex; flex-direction: column; overflow: hidden;">
+        <div id="section-main-1" class="for_menu_object"></div>
+        <div id="particles-js" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;overflow: hidden;z-index: 0;"></div>
+        <div class="content_main_parallax">
+            <!--
+            <div data-depth="0.05" class="layer">
+                <img src="{{img}}bg-main.png" alt="" style="width: 100%; height: 100%; transform: scale(1.1);">
+            </div>
+            -->
+            <div data-depth="0.1" class="layer">
+                <div class="content_main_parallax__1"></div>
+                <div class="content_main_parallax__5"></div>
+            </div>
+            <div data-depth="0.4" class="layer">
+                <div class="content_main_parallax__4"></div>
+                <div class="content_main_parallax__2"></div>
+            </div>
+            <div data-depth="0.8" class="layer">
+                <div class="content_main_parallax__3"></div>
+            </div>
+        </div>
+        <img src="{{img}}main-1.png" alt="" class="content_main__img_1">
+        <img src="{{img}}main-2.png" alt="" class="content_main__img_2">
+        <div class="content_main__body" style="z-index: 100;">
+            <div class="content_main__text-block">
+                <p class="content_main__text-1">Role Play сервер GTA V</p>
+                <p class="content_main__text-2">Нереальный драйв! <br>Играй и зарабатывай!</p>
+                <p class="content_main__text-3">Постоянные обновления и многое другое на нашем сервере!</p>
+            </div>
+            <a href="#section-main-3" class="content_main__btn-start main-page-btn">
+                <span class="content_main__gamepad-ico"></span><p>Начать игру</p>
+            </a>
+            <div class="content_main__scroll">
+                <div class="content_main__mouse-ico"></div>
+                <div class="content_main__arrow">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content_features fullscreen" style="background-color: #F8F8F8;">
+        <div class="section-2-background"></div>
+        <div id="section-main-2" class="for_menu_object"></div>
+        <div class="section-servers">
+            <div class="content_features_online">
+                <div class="content_features_online__item content_features_online__text">Сервер HYDRA#1</div>
+                <div class="content_features_online__item content_features_online__show-online">
+                    <div class="content_features_online__indicator-1"></div>
+                    <div class="content_features_online__indicator-2" style="width: 0"></div>
+                    <div style="display: flex; justify-content: center;">
+                        <span class="content_features_online__value-1">0</span>
+                        <span class="content_features_online__value-2">/</span>
+                        <span class="content_features_online__value-3">1300</span>
+                    </div>
+                </div>
+                <span class="content_features_online__item content_features_online__copy-ico main-page-btn main-page-copy"></span>
+            </div>
+        </div>
+        <div class="content_features__body">
+            <div class="content_features__wrapper content_features__before-animation1">
+                <div class="content_features__block content_features__block_1">
+                    <div class="content_features__text-block">
+                        <p>Бизнесы</p>
+                        <p>Если вы владеете бизнесом на нашем сервере, то имеете полное право изменять цены на товары, услуги и не только! Присоединяйтесь и наслаждайтесь игровым процессом!</p>
+                    </div>
+                </div>
+                <div class="content_features__img content_features__img_1"></div>
+            </div>
+            <div class="content_features__wrapper content_features__before-animation2">
+                <div class="content_features__block content_features__block_2">
+                    <div class="content_features__text-block">
+                        <p>Реальные авто</p>
+                        <p>Мы добавили в игру большое количество реально существующих автомобилей, которые разнообразят твой игровой процесс и дадут возможность прокатиться по ночному городу с удовольствием!</p>
+                    </div>
+                </div>
+                <div class="content_features__img content_features__img_2"></div>
+            </div>
+            <div class="content_features__wrapper content_features__before-animation1">
+                <div class="content_features__block content_features__block_3">
+                    <div class="content_features__text-block">
+                        <p>Новые игровые механики</p>
+                        <p>Многообразие работ и занятий не даст заскучать во время игры. Находи занятие по интересу, новых друзей и даже больше!</p>
+                    </div>
+                </div>
+                <div class="content_features__img content_features__img_3"></div>
+            </div>
+        </div>
+    </section>
+    <section class="content_how fullscreen">
+        <div id="section-main-3" class="for_menu_object"></div>
+        <div class="content_how_parallax">
+            <!--
+            <div data-depth="0.05" class="layer">
+                <img src="{{img}}bg-how.png" alt="" style="width: 100%; height: 100%; transform: scale(1.1);">
+            </div>
+            -->
+            <div data-depth="0.1" class="layer">
+                <div class="content_how_parallax__3"></div>
+            </div>
+            <div data-depth="0.4" class="layer">
+                <div class="content_how_parallax__1"></div>
+                <div class="content_how_parallax__4"></div>
+            </div>
+            <div data-depth="0.8" class="layer">
+                <div class="content_how_parallax__2"></div>
+            </div>
+        </div>
+        <div class="content_how__body" style="">
+            <div class="content_how__header">
+                Как начать играть <br> на нашем сервере?
+            </div>
+            <div class="content_how_list__item content_how_list__item_1 content_how__before-animation1">
+                <div class="content_how_list__header">
+                    1. Установите лицензионную версию Grand Theft Auto V
+                </div>
+                <div class="content_how_list__text">
+                    Подойдёт любая версия игры, не зависимо от магазина. <br> Steam, Epic Games или Rockstar
+                </div>
+                <div class="content_how_list_group">
+                    <a href='https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/?l=russian' class="content_how_list__btn main-page-btn">Купить в Steam</a>
+                    <a href='https://www.epicgames.com/store/ru/product/grand-theft-auto-v/home' class="content_how_list__btn main-page-btn">Купить в EGS</a>
+                </div>
+            </div>
+            <div class="content_how_list__item content_how_list__item_2 content_how__before-animation1">
+                <div class="content_how_list__header">
+                    2. Скачайте RAGE MP
+                </div>
+                <div class="content_how_list__text">
+                    Установите лаунчер Rage MP, который позволит вам <br> подключаться к Role Play серверам. <span style="color: #A116E7;">Он бесплатный!</span>
+                </div>
+                <a href='https://rage.mp/' class="content_how_list__btn main-page-btn">Установить Rage MP</a>
+            </div>
+            <div class="content_how_list__item content_how_list__item_3 content_how__before-animation1">
+                <div class="content_how_list__header">
+                    3. Найди наш сервер в поиске
+                </div>
+                <div class="content_how_list__text">
+                    Последний шаг - заходи на наш сервер через лаунчер Rage MP <br> и регистрируй аккаунт. Хорошей игры!
+                </div>
+                <div class="content_how_list__btn main-page-btn main-page-copy">Скопировать IP сервера</div>
+            </div>
+        </div>
+        <img src="{{img}}how-1.png" alt="" class="content_how__img_1">
+    </section>
+    <section class="content_about fullscreen">
+        <div class="krytilka"></div>
+        <div class="krytilka-2"></div>
+        <div id="section-main-4" class="for_menu_object"></div>
+        <div class="content_about__body">
+            <div class="content_about__title">Мы сделали небольшое видео, <br> чтобы ты лучше нас узнал.</div>
+            <div class="content_about__subtitle">
+                Role Play сервера позволяют тебе окунуться в новый мир, где ты можешь стать кем угодно, начиная от простого электрика, заканчивая мэром штата или главарём местной мафии! Устраивай вечеринки, гонки или целые войны! Заводи новых друзей и проводи время с проверенной компанией!            </div>
+            <div class="content_about__video" style="padding: 1% 0.5% 1.2% 0.5%;">
+            </div>
+        </div>
+    </section>
+    <section class="content_support fullscreen">
+        <div id="section-main-5" class="for_menu_object"></div>
+        <div class="content_support__body">
+            <div class="content_support_ico main-page-btn"><a href="https://vk.com/hydrarp" style="display: flex; height: 112px; width: 112px; background: url(/static/img/vk-ico.png) center center / cover;"></a></div>
+            <div class="content_support_ico main-page-btn"><a href="https://discord.com/invite/mwdWbze" style="display: flex; height: 112px; width: 112px; background: url(/static/img/discord-ico.png) center center / cover;"></a></div>
+            <div class="content_support_ico main-page-btn"><a href="https://www.tiktok.com/@hydrarp" style="display: flex; height: 112px; width: 112px; background: url(/static/img/tiktok-ico.png) center center / cover;"></a></div>
+            <!--https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/-->
+            <div class="content_support_ico main-page-btn"><a href="https://hydrarp.ru/forum" style="display: flex; height: 112px; width: 112px; background: url(/static/img/messanger-ico.png) center center / cover;"></a></div>
+        </div>
+        <img class="content_support__img_1" src="{{img}}support-1.png" alt="">
+        <div class="content_support__img_logo"></div>
+    </section>
+</main>
+{% endblock %}
+
+{% block mainStyles %}
+<link rel="stylesheet" href="{{css}}main-style.css">
+<link rel="stylesheet" href="{{css}}main-parallax.css">
+<style>
+.main-page-btn {
+    text-decoration: none;
+    transition: transform 0.3s ease 0s;
+}
+
+.main-page-btn:hover {
+    transform: scale(1.1);
+}
+
+.main-page-btn:active {
+    transform: scale(0.9);
+}
+.content_features__body {
+    overflow: hidden;
+}
+.content_how {
+    overflow: hidden;
+}
+
+@keyframes arrows {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    10% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    25% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    75% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    90% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+.content_main__arrow div {
+    background: url({{img}}arrow-ico.svg) center center / contain no-repeat;
+    width: 24px;
+    height: 9px;
+    position: absolute;
+    left: 0;
+}
+.content_main__arrow div:nth-child(1) {
+    animation: arrows 2s ease infinite;
+    top: 0;
+}
+.content_main__arrow div:nth-child(2) {
+    animation: arrows 2s ease infinite 0.6s;
+    top: 9px;
+}
+.content_main__arrow div:nth-child(3) {
+    animation: arrows 2s ease infinite 1.2s;
+    top: 18px;
+}
+</style>
+{% endblock %}
+
+{% block mainScripts %}
+<script src="{{js}}particles.min.js"></script>
+<script src="{{js}}menuBurger.js"></script>
+<script>
+    particlesJS.load('particles-js', '{{js}}particles.json', function() {});
+    $.ajax({
+        url:        'https://cdn.rage.mp/master/',
+        type:       'GET',
+        data:       '',
+        success:    function(response) {
+        response = JSON.parse(response);
+        let need_answer = response['s1.hydrarp.ru:22005'].players;
+		if(7 > (parseInt(need_answer) / 13)){
+                       $('.content_features_online__indicator-2').css({width: '7%'});		
+		} else {
+			$('.content_features_online__indicator-2').css({width: parseInt(need_answer) / 13 + '%'})
+		}
+            $('.content_features_online__value-1').text(need_answer)
+        },
+        error:      function(response, exception) {
+
+        },
+    });
+    setInterval(() => {
+        $.ajax({
+            url:        'https://cdn.rage.mp/master/',
+            type:       'GET',
+            data:       '',
+            success:    function(response) {
+            response = JSON.parse(response);
+            let need_answer = response['s1.hydrarp.ru:22005'].players;
+		if(7 > (parseInt(need_answer) / 13)){
+                       $('.content_features_online__indicator-2').css({width: '7%'});		
+		} else {
+			$('.content_features_online__indicator-2').css({width: parseInt(need_answer) / 13 + '%'})
+		} 
+                $('.content_features_online__value-1').text(need_answer)
+            },
+            error:      function(response, exception) {
+                
+            },
+        });
+    }, 5000);
+</script>
+<script>
+    $('.header__logo').on('click', function(){
+	window.location.href = 'https://hydrarp.ru/';	
+    });
+    window.history.pushState("", document.title, window.location.pathname);
+    $(window).on('hashchange', function(e){
+        window.history.pushState("", document.title, window.location.pathname);  
+    });
+    var links = $('.header__link');
+    links.get(0).className = links.get(0).className + ' header__link_active';
+    function removeActive() {
+        links.removeClass('header__link_active');
+    }
+    $(window).scroll(function() {
+        var scrollTop = $(window).scrollTop();
+        removeActive();
+        if ( scrollTop >= $('#section-main-1').offset().top &&
+             scrollTop < $('#section-main-2').offset().top) { 
+            links.get(0).className = links.get(0).className + ' header__link_active';
+        } else if ( scrollTop >= $('#section-main-2').offset().top &&
+             scrollTop < $('#section-main-3').offset().top) { 
+            links.get(1).className = links.get(1).className + ' header__link_active';
+        } else if ( scrollTop >= $('#section-main-3').offset().top &&
+             scrollTop < $('#section-main-4').offset().top) { 
+            links.get(2).className = links.get(2).className + ' header__link_active';
+        } else if ( scrollTop >= $('#section-main-4').offset().top &&
+             scrollTop < $('#section-main-5').offset().top) { 
+            links.get(3).className = links.get(3).className + ' header__link_active';
+        } else if ( scrollTop >= $('#section-main-5').offset().top) { 
+            links.get(4).className = links.get(4).className + ' header__link_active';
+        }
+    });
+    $('.main-page-copy').on('click', function() {
+        navigator.clipboard.writeText('s1.hydrarp.ru:22005')
+        .then(() => {
+            // Получилось!
+        })
+        .catch(err => {
+            console.log('Something went wrong', err);
+        });
+    });
+    
+    // Animation
+    let topoffset = 400;
+    let time = 800;
+    function animate1(e) {
+        if ($(window).scrollTop() > ($('#section-main-2').offset().top - topoffset)) {
+            $($('.content_features__wrapper')[0]).animate({
+                opacity: '1',
+            }, time);
+            $($('.content_features__wrapper')[0]).css({transform: 'translate(0, 0)', transition: 'transform ' + time + ' ease 0s'});
+            setTimeout( () => {
+                $($('.content_features__wrapper')[1]).animate({
+                    opacity: '1',
+                }, time);
+                $($('.content_features__wrapper')[1]).css({transform: 'translate(0, 0)', transition: 'transform ' + time + ' ease 0s'});
+            }, 100);
+            setTimeout( () => {
+                $($('.content_features__wrapper')[2]).animate({
+                    opacity: '1',
+                }, time);
+                $($('.content_features__wrapper')[2]).css({transform: 'translate(0, 0)', transition: 'transform ' + time + ' ease 0s'});
+            }, 200);
+            $(window).unbind('scroll', animate1);
+        }
+    }
+    $(window).bind('scroll', animate1);
+
+    function animate2(e) {
+        if ($(window).scrollTop() > ($('#section-main-3').offset().top - topoffset)) {
+            $($('.content_how_list__item')[0]).animate({
+                opacity: '1',
+            }, time);
+            $($('.content_how_list__item')[0]).css({transform: 'translate(0, 0)', transition: 'transform ' + time + ' ease 0s'});
+            setTimeout( () => {
+                $($('.content_how_list__item')[1]).animate({
+                    opacity: '1',
+                }, time);
+                $($('.content_how_list__item')[1]).css({transform: 'translate(0, 0)', transition: 'transform ' + time + ' ease 0s'});
+            }, 100);
+            setTimeout( () => {
+                $($('.content_how_list__item')[2]).animate({
+                    opacity: '1',
+                }, time);
+                $($('.content_how_list__item')[2]).css({transform: 'translate(0, 0)', transition: 'transform ' + time + ' ease 0s'});
+            }, 200);
+            $(window).unbind('scroll', animate2);
+        }
+    }
+    $(window).bind('scroll', animate2);
+
+    // ratio of youtube-box
+    $('.content_about__player').css({ height: ($('.content_about__player').get(0).clientWidth * 9 / 16) + 'px'});
+    $(window).on('resize', (e) => {
+        $('.content_about__player').css({ height: ($('.content_about__player').get(0).clientWidth * 9 / 16) + 'px'});
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+<script src="{{js}}mainPrlx.js"></script>
+{% endblock %}

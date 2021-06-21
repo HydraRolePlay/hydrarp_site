@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="{{css}}forum-style.css" rel="stylesheet">
+<main class="main-content" style="margin-top: 80px;">
+
+	<section class="forum-links" style="position: relative;">
+		<div id="particles-js" style="position: absolute;top: 0;bottom: 0; right: 0; left: 0;"></div>
+		<div class="container">
+			<a href="/forum" class="btn btn-link link-forum">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Форум</span>
+			</a>
+			<a href="/news" class="btn btn-link btn-link-deactive link-news">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Новости</span>
+			</a>
+		</div>
+	</section>
+	<section class="forum">
+		<div class="container">
+			<div class="forum-content" style="z-index: 100;">
+			</div>
+			<aside class="forum-sidebar" style="z-index: 100;">
+			</aside>
+		</div>
+	</section>
+</main>
+{% endblock %}
+{% block mainScripts %}
+<script src="{{js}}particles.min.js"></script>
+<script src="{{js}}sendSearchForm.js"></script>
+<script src="{{js}}menuBurger.js"></script>
+<script>
+	particlesJS.load('particles-js', '{{js}}particles.json', function() {});
+	$('.header__logo').on('click', function(){
+	window.location.href = 'https://hydrarp.ru/';
+    });
+    var links = $('.header__link');
+    links.get(5).className = links.get(5).className + ' header__link_active';
+    var news_data = '{{news}}';
+    news_data = JSON.parse(news_data.split("&#39;").join('"'));
+	let html = '';
+	for(let i=0; i<Object.keys(news_data).length; i++){
+		if(i === 3) break;
+		let news = news_data[Object.keys(news_data)[i]][0];
+		if(news.type !== 1) continue;
+		html += '<div class="' + (news.type === 1 ? 'box-news' : 'box-news box-news-wide') + '">' +
+					'<div class="box-news-preview">' +
+						'<img src="{{img}}' + news.image + '" class="box-news-img">' +
+					'</div>' +
+					'<p class="box-news-title">' + news.title + '</p>' +
+					'<a href="/news/' + Object.keys(news_data)[i] + '" class="box-news-link">Перейти к новости</a>' +
+				'</div>'
+	}
+	$('.forum-sidebar').html('');
+	$('.forum-sidebar').append(html);
+
+	var forum_data = '{{forum}}';
+    forum_data = JSON.parse(forum_data.split("&#39;").join('"'));
+	html = '';
+	for(let i=0; i<forum_data.length; i++){
+		let forum = forum_data[i];
+		if(i === 0){
+			html += '<div class="forum-section">' +
+						'<div class="forum-heading">' +
+							'<h2 class="title title-white">' + forum.header + '</h2>' +
+							'<form class="search-form">' +
+								'<input type="search" class="search" id="search" name="search" placeholder="Поиск по форуму">' +
+								'<span class="search-icon"></span>' +
+							'</form>' +
+						'</div>' +
+						'<div class="forum-box">'
+		} else {
+			html += '<div class="forum-section">' +
+						'<div class="forum-heading">' +
+							'<h2 class="title title-gradient">' + forum.header + '</h2>' +
+						'</div>' +
+						'<div class="forum-box">'
+		}
+		for(let j=0; j<forum.data.length; j++){
+			let semiData = forum.data[j];
+			html += '<div class="forum-line">' +
+						'<div class="forum-category">' +
+							'<a href="/forum/' + semiData.link + '" class="forum-category-link">' + semiData.header + '</a>' +
+								'<div class="forum-category-desc">' +
+									'<p class="forum-category-author">Создано: <a href="' + semiData.creator.link + '" class="author-link">' + semiData.creator.login + '</a></p>' +
+								'</div>' +
+							'</div>' +
+							'<div class="forum-desc">' +
+								'<div class="forum-desc-col">' +
+									'<p class="forum-desc-title">Темы</p>' +
+									'<span class="themes-count">' + semiData.themes_length + '</span>' +
+								'</div>' +
+								'<div class="forum-desc-col">' +
+									'<p class="forum-desc-title">Сообщения</p>' +
+									'<span class="messages-count">' + semiData.messages_length + '</span>' +
+								'</div>'
+			if(semiData.lastMessage !== undefined)
+				html += '<div class="forum-desc-col">' +
+							'<p class="forum-desc-title"><a href="' + semiData.lastMessage.link + '" style="text-decoration: none; color: #666;">Последнее сообщение</a></p>' +
+							'<div class="last-message">' +
+								'<a href="' + semiData.lastMessage.user.link + '" class="last-message-link">' + semiData.lastMessage.user.name + '; </a>' +
+								'<time class="last-message-date">' + semiData.lastMessage.date + '</time>' +
+							'</div>' +
+						'</div>'
+			html +=	'</div>' +
+				'</div>'
+		}
+		html += '</div></div>'
+	}
+	$('.forum-content').html('');
+	$('.forum-content').append(html);
+
+</script>
+{% endblock %}

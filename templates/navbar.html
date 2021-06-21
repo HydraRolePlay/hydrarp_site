@@ -1,0 +1,28 @@
+<header class="header" style="z-index: 1000;box-shadow: 0px 8px 16px rgba(0, 102, 255, 0.25);">
+    <div class="h_container">
+        <div class="header__body">
+            <div class="header__logo"></div>
+            <div class="header__burger"><span></span></div>
+            <nav class="header__menu">
+                <ul class="header__list">
+                    <li class="header__item"><a href="/#section-main-1" class="header__link">Главная</a></li>
+                    <li class="header__item"><a href="/#section-main-2" class="header__link">Особенности</a></li>
+                    <li class="header__item"><a href="/#section-main-3" class="header__link">Как играть</a></li>
+                    <li class="header__item"><a href="/#section-main-4" class="header__link">О нас</a></li>
+                    <li class="header__item"><a href="/#section-main-5" class="header__link">Наши контакты</a></li>
+                    <li class="header__item"><a href="/forum" class="header__link">Форум</a></li>
+                </ul>
+            </nav>
+            {% if current_user.is_authenticated %}
+            <div class="header__user">
+                <a href="/profile" class="header__link">{{current_user.login}}</a> <!-- fix -->
+                <img src="{{img}}{{image}}" alt="avatar" style="width: 40px; height: 40px; border-radius: 50px;object-fit: cover;">
+            </div>
+            {% else %}
+            <div class="header__sign-button main-page-btn" style="display: flex;">
+                Войти
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>

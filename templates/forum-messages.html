@@ -1,0 +1,408 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="{{css}}forum-style.css" rel="stylesheet">
+<main class="main-content" style="margin-top: 80px;">
+	<section class="forum-links" style="position: relative; min-height: 500px !important;">
+		<div id="particles-js" style="position: absolute;top: 0;bottom: 0; right: 0; left: 0;"></div>
+		<div class="container">
+			<a href="/forum" class="btn btn-link link-forum">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Форум</span>
+			</a>
+			<a href="/news" class="btn btn-link btn-link-deactive link-news">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Новости</span>
+			</a>
+		</div>
+	</section>
+	<section class="forum" style="margin-top: -250px !important;">
+		<div class="container">
+			<div class="forum-theme" style="z-index: 100;">
+				<div class="forum-section">
+					<div class="forum-heading">
+						<div>
+							<ul class="breadcrumbs">
+								<li>
+									<a href="/forum">{{forum.header}}</a>
+								</li>
+								<li>
+									<a href="/forum/{{forum.link}}">{{forum.theme}}</a>
+								</li>
+								<li>
+									<a href="/forum/{{forum.link}}/{{forum.subtheme_link}}">{{forum.subtheme}}</a>
+								</li>
+							</ul>
+							<h2 class="title title-white">{{forum.thread_title}}</h2>
+						</div>
+					</div>
+					<div class="forum-box">
+						<div class="message-container">
+						</div>
+						<form class="create-form">
+							<p class="create-form-title">Ваше сообщение:</p>
+							<div class="create-form-message">
+								<textarea class="create-form-textarea text-of-theme" name="text-of-theme" placeholder="Введите текст сообщения..."></textarea>
+							</div>
+							<a class="btn btn-check" id="send">Отправить</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}
+{% block mainScripts %}
+<script src="{{js}}particles.min.js"></script>
+<script src="{{js}}menuBurger.js"></script>
+<script>
+	particlesJS.load('particles-js', '{{js}}particles.json', function() {});
+    $('.header__logo').on('click', function(){
+    window.location.href = 'https://hydrarp.ru/';
+    });
+    var links = $('.header__link');
+    links.get(5).className = links.get(5).className + ' header__link_active';
+    var answer = '';
+    $('.text-of-theme').on('input', function(){
+        let text = $('.text-of-theme').val()
+        text = text.split("`").join('’');
+        text = text.split("'").join('’');
+        text = text.split('"').join('”');
+        text = text.split('<').join('');
+        text = text.split('>').join('');
+        text = text.split('\\').join('');
+        text = text.substring(0, 5000);
+        $('.text-of-theme').val(text);
+    });
+function findAndReplaceLink(inputText) {
+    function indexOf(arr, value, from) {
+        for (var i = from || 0, l = (arr || []).length; i < l; i++) {
+            if (arr[i] == value) return i;
+        }
+        return -1;
+    }
+
+    function clean(str) {
+        return str ? str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;') : '';
+    }
+
+    function replaceEntities(str) {
+        return se('<textarea>' + ((str || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')) + '</textarea>').value;
+    }
+    function se(html) {return ce('div', {innerHTML: html}).firstChild;}
+    function ce(tagName, attr, style) {
+        var el = document.createElement(tagName);
+        if (attr) extend(el, attr);
+        if (style) setStyle(el, style);
+        return el;
+    }
+    function setStyle(elem, name, value){
+        elem = ge(elem);
+        if (!elem) return;
+        if (typeof name == 'object') return each(name, function(k, v) { setStyle(elem,k,v); });
+        if (name == 'opacity') {
+            if (browser.msie) {
+                if ((value + '').length) {
+                    if (value !== 1) {
+                        elem.style.filter = 'alpha(opacity=' + value * 100 + ')';
+                    } else {
+                        elem.style.filter = '';
+                    }
+                } else {
+                    elem.style.cssText = elem.style.cssText.replace(/filter\s*:[^;]*/gi, '');
+                }
+                elem.style.zoom = 1;
+            };
+            elem.style.opacity = value;
+        } else {
+            try{
+                var isN = typeof(value) == 'number';
+                if (isN && (/height|width/i).test(name)) value = Math.abs(value);
+                elem.style[name] = isN && !(/z-?index|font-?weight|opacity|zoom|line-?height/i).test(name) ? value + 'px' : value;
+            } catch(e){debugLog('setStyle error: ', [name, value], e);}
+        }
+    }
+    function extend() {
+        var a = arguments, target = a[0] || {}, i = 1, l = a.length, deep = false, options;
+
+        if (typeof target === 'boolean') {
+            deep = target;
+            target = a[1] || {};
+            i = 2;
+        }
+
+        if (typeof target !== 'object' && !isFunction(target)) target = {};
+
+        for (; i < l; ++i) {
+            if ((options = a[i]) != null) {
+                for (var name in options) {
+                    var src = target[name], copy = options[name];
+
+                    if (target === copy) continue;
+
+                    if (deep && copy && typeof copy === 'object' && !copy.nodeType) {
+                        target[name] = extend(deep, src || (copy.length != null ? [] : {}), copy);
+                    } else if (copy !== undefined) {
+                        target[name] = copy;
+                    }
+                }
+            }
+        }
+
+        return target;
+    }
+
+    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#%?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\)))?)?)/ig,
+            function () { // copied to notifier.js:3401
+                var matches = Array.prototype.slice.apply(arguments),
+                    prefix = matches[1] || '',
+                    protocol = matches[2] || 'http://',
+                    domain = matches[3] || '',
+                    url = domain + (matches[4] || ''),
+                    full = (matches[2] || '') + matches[3] + matches[4];
+
+                if (domain.indexOf('.') == -1 || domain.indexOf('..') != -1) return matches[0];
+                var topDomain = domain.split('.').pop();
+                if (topDomain.length > 6 || indexOf('info,name,aero,arpa,coop,museum,mobi,travel,xxx,asia,biz,com,net,org,gov,mil,edu,int,tel,ac,ad,ae,af,ag,ai,al,am,an,ao,aq,ar,as,at,au,aw,ax,az,ba,bb,bd,be,bf,bg,bh,bi,bj,bm,bn,bo,br,bs,bt,bv,bw,by,bz,ca,cc,cd,cf,cg,ch,ci,ck,cl,cm,cn,co,cr,cu,cv,cx,cy,cz,de,dj,dk,dm,do,dz,ec,ee,eg,eh,er,es,et,eu,fi,fj,fk,fm,fo,fr,ga,gd,ge,gf,gg,gh,gi,gl,gm,gn,gp,gq,gr,gs,gt,gu,gw,gy,hk,hm,hn,hr,ht,hu,id,ie,il,im,in,io,iq,ir,is,it,je,jm,jo,jp,ke,kg,kh,ki,km,kn,kp,kr,kw,ky,kz,la,lb,lc,li,lk,lr,ls,lt,lu,lv,ly,ma,mc,md,me,mg,mh,mk,ml,mm,mn,mo,mp,mq,mr,ms,mt,mu,mv,mw,mx,my,mz,na,nc,ne,nf,ng,ni,nl,no,np,nr,nu,nz,om,pa,pe,pf,pg,ph,pk,pl,pm,pn,pr,ps,pt,pw,py,qa,re,ro,ru,rs,rw,sa,sb,sc,sd,se,sg,sh,si,sj,sk,sl,sm,sn,so,sr,ss,st,su,sv,sx,sy,sz,tc,td,tf,tg,th,tj,tk,tl,tm,tn,to,tp,tr,tt,tv,tw,tz,ua,ug,uk,um,us,uy,uz,va,vc,ve,vg,vi,vn,vu,wf,ws,ye,yt,yu,za,zm,zw,рф,укр,сайт,онлайн,срб,cat,pro,local'.split(','), topDomain) == -1) {
+                    if (!/^[a-zA-Z]+$/.test(topDomain) || !matches[2]) {
+                        return matches[0];
+                    }
+                }
+
+                if (matches[0].indexOf('@') != -1) {
+                    return matches[0];
+                }
+                try {
+                    full = decodeURIComponent(full);
+                } catch (e){}
+
+                if (full.length > 55) {
+                    full = full.substr(0, 53) + '..';
+                }
+                full = clean(full).replace(/&amp;/g, '&');
+
+                    url = replaceEntities(url).replace(/([^a-zA-Z0-9#%;_\-.\/?&=\[\]])/g, encodeURIComponent);
+                    var tryUrl = url, hashPos = url.indexOf('#/');
+                    if (hashPos >= 0) {
+                        tryUrl = url.substr(hashPos + 1);
+                    } else {
+                        hashPos = url.indexOf('#!');
+                        if (hashPos >= 0) {
+                            tryUrl = '/' + url.substr(hashPos + 2).replace(/^\//, '');
+                        }
+                    }
+                    return prefix + '<a href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
+            });
+
+    return replacedText;
+}
+    function messageEdit(e){
+        if(!JSON.parse(('{{current_user.is_authenticated}}').toLowerCase())) return;
+        $('.message-answer').unbind('click');
+        $('.message-complaint').unbind('click');
+        $('.message-delete').unbind('click');
+        $('body').unbind('click');
+        $(".edit-menu").remove()
+        let edit_html = '<div class="edit-menu" style="right: 61px; top: -25px;">' +
+                            '<a class="message-answer">Ответить</a>' +
+                            '<a class="link-red message-complaint">Пожаловаться</a>' +
+                            ('{{current_user.login}}' === $($(this.parentElement.parentElement).find('.message-author-user')).html() ? '<a class="link-red message-delete">Удалить</a>': (parseInt('{{current_user.admin}}') ? '<a class="link-red message-delete">Удалить</a>' : '')) +
+                        '</div>'
+        $(this.parentElement).append(edit_html);
+
+        $('.message-answer').on('click', function(){
+            answer = $(this.parentElement.parentElement.parentElement).find('.message-author-user').html()
+            $(".edit-menu").remove()
+            $('body').unbind('click');
+            if($(".create-form").find(".reply-to").length){
+                $(".create-form .reply-to-nick").html('“' + answer + '”');
+            } else {
+                $(".create-form-title").after('<div class="reply-to">В ответ <span class="reply-to-nick">“' + answer + '”</span></div>');
+            }
+        });
+        $('.message-complaint').on('click', function(){
+            $(".edit-menu").remove()
+            $('body').unbind('click');
+        });
+        $('.message-delete').on('click', function(){
+            $.ajax({
+                url:        '/delete_forum_message',
+                type:       'POST',
+                data:       'login=' + $(this.parentElement.parentElement.parentElement).find('.message-author-user').html() + '&time=' + $($(this.parentElement.parentElement.parentElement).find('.message-time')).html() + '&link=' + window.location.href.split('.ru/forum/')[1] + '&secret=' + $('.captcha_key').val(),
+                success:    function(response) {
+                    grecaptcha.reset();
+                    grecaptcha.execute();
+                    location.reload();
+                },
+                error:      function(response, exception) {
+                    grecaptcha.reset();
+                    grecaptcha.execute();
+                    location.reload();
+                }
+            });
+            $(".edit-menu").remove()
+            $('body').unbind('click');
+        });
+        setTimeout(()=>{
+			$('body').on('click', function(){
+				$(".edit-menu").remove();
+			});
+        }, 200);
+    }
+
+
+    var forum_data = '{{forum}}';
+    forum_data = forum_data.split('`').join("");
+    forum_data = forum_data.split('&lt;p&gt;').join("<p>");
+    forum_data = forum_data.split('&lt;/p&gt;').join("</p>");
+    forum_data = forum_data.split("&#39;").join('"')
+    forum_data = JSON.parse(forum_data);
+
+    if(!JSON.parse(('{{current_user.is_authenticated}}').toLowerCase()) || (forum_data.blocked && !parseInt('{{current_user.admin}}'))){
+        $(".create-form-textarea").attr("disabled", true);
+        $('.btn.btn-check').addClass('non-active-btn');
+    }
+    let html = '';
+    function sendMSG(e){
+        if (e.keyCode == 13 && !e.shiftKey) {
+            send_usr_msg();
+        }
+    }
+    addEventListener("keydown", sendMSG);
+
+    $('.btn.btn-check').on('click', function(){
+		send_usr_msg()
+	});
+    var adminsLevels = ['Игрок', 'Модератор', 'Хелпер', 'Администратор', 'Главный Администратор', 'Создатель']
+	function send_usr_msg(){
+	    if(forum_data.blocked && !parseInt('{{current_user.admin}}'))
+            return
+        if(!$('.text-of-theme').val().trim().length){
+        } else {
+            $('.create-form .reply-to').remove()
+            $.ajax({
+                url:        '/send_forum_new_message',
+                type:       'POST',
+                data:       $('.create-form').serialize() + '&link=' + window.location.href.split('.ru/forum/')[1] + '&useranswer=user-name-' + answer + '&secret=' + $('.captcha_key').val(),
+                success:    function(response) {
+                    grecaptcha.reset();
+                    grecaptcha.execute();
+                },
+                error:      function(response, exception) {
+                    grecaptcha.reset();
+                    grecaptcha.execute();
+                }
+            });
+            $('.text-of-theme').val('');
+            answer = '';
+        }
+	}
+    for(let i=0; i<forum_data.messages.length; i++){
+        let message = forum_data.messages[i];
+        if(!message.answer){
+        html += '<div class="message-main">' +
+                    '<div class="message-content">' +
+                        '<div class="message-author">' +
+                            '<img src="{{img}}' + message.author.image + '" class="message-author-img">' +
+                            '<a href="/members/' + message.author.name + '" class="message-author-user">' + message.author.name + '</a>' +
+                            '<p class="message-author-post">' + adminsLevels[message.author.admin] + '</p>' +
+                        '</div>' +
+                        '<div class="message-text">' +
+                            findAndReplaceLink(message.text) +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="message-footer">' +
+                        '<time class="message-time">' + message.time + '</time>' +
+                        '<a class="message-edit"></a>' +
+                    '</div>' +
+                '</div>'
+        }else{
+        html += '<div class="message-reply">' +
+                    '<div class="message-content">' +
+                        '<div class="message-author">' +
+                            '<img src="{{img}}' + message.author.image + '" class="message-author-img">' +
+                            '<a href="/members/' + message.author.name + '" class="message-author-user">' + message.author.name + '</a>' +
+                            '<p class="message-author-post">' + adminsLevels[message.author.admin] + '</p>' +
+                        '</div>' +
+                        '<div class="message-text">' +
+                            '<div class="reply-to">В ответ <span class="reply-to-nick">“' + message.answer + '”</span></div>' +
+                            findAndReplaceLink(message.text) +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="message-footer">' +
+                        '<time class="message-time">' + message.time + '</time>' +
+                        '<a class="message-edit"></a>' +
+                    '</div>' +
+                '</div>'
+        }
+    }
+    $('.message-container').html('');
+    $('.message-container').append(html);
+	$('.message-edit').on('click', messageEdit);
+	setInterval(function updateCaptcha(){
+		grecaptcha.reset();
+        grecaptcha.execute();
+	}, 45000);
+    setInterval(function checkMes(){
+        $.ajax({
+            url:        '/check_forum_message',
+            type:       'POST',
+            data:       'last-message=' + forum_data.messages[forum_data.messages.length-1].time + '&link=' + window.location.href.split('.ru/forum/')[1],
+            success:    function(response) {
+                let result = JSON.parse(response);
+                for(let i=0; i<result.messages.length; i++){
+                    let html = '';
+                    let message = result.messages[i];
+                    forum_data.messages.push(message)
+                    if(!message.answer){
+                    html = '<div class="message-main">' +
+                                '<div class="message-content">' +
+                                    '<div class="message-author">' +
+                                        '<img src="{{img}}' + message.author.image + '" class="message-author-img">' +
+                                        '<a href="/members/' + message.author.name + '" class="message-author-user">' + message.author.name + '</a>' +
+                                        '<p class="message-author-post">' + adminsLevels[message.author.admin] + '</p>' +
+                                    '</div>' +
+                                    '<div class="message-text">' +
+                                        findAndReplaceLink(message.text.split('`').join("")) +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="message-footer">' +
+                                    '<time class="message-time">' + message.time + '</time>' +
+                                    '<a class="message-edit"></a>' +
+                                '</div>' +
+                            '</div>'
+
+                    }else{
+                    html = '<div class="message-reply">' +
+                                '<div class="message-content">' +
+                                    '<div class="message-author">' +
+                                        '<img src="{{img}}' + message.author.image + '" class="message-author-img">' +
+                                        '<a href="/members/' + message.author.name + '" class="message-author-user">' + message.author.name + '</a>' +
+                                        '<p class="message-author-post">' + adminsLevels[parseInt(message.author.admin)] + '</p>' +
+                                    '</div>' +
+                                    '<div class="message-text">' +
+                                        '<div class="reply-to">В ответ <span class="reply-to-nick">“' + message.answer + '”</span></div>' +
+                                        findAndReplaceLink(message.text.split('`').join("")) +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="message-footer">' +
+                                    '<time class="message-time">' + message.time + '</time>' +
+                                    '<a class="message-edit"></a>' +
+                                '</div>' +
+                            '</div>'
+                    }
+                    $('.message-container').append(html);
+                }
+                if(result.messages.length){
+                	$('body').unbind('click');
+					$('.message-edit').unbind('click');
+					$('.message-edit').on('click', messageEdit);
+                }
+            },
+            error:      function(response, exception) {
+            }
+        });
+    }, 500);
+</script>
+{% endblock %}

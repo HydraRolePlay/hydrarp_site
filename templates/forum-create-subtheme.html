@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="{{css}}forum-style.css" rel="stylesheet">
+<main class="main-content" style="margin-top: 80px;">
+	<section class="forum-links" style="position: relative; min-height: 500px !important;">
+		<div id="particles-js" style="position: absolute;top: 0;bottom: 0; right: 0; left: 0;"></div>
+		<div class="container">
+			<a href="/forum" class="btn btn-link link-forum">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Форум</span>
+			</a>
+			<a href="/news" class="btn btn-link btn-link-deactive link-news">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Новости</span>
+			</a>
+		</div>
+	</section>
+	<section class="forum" style="margin-top: -250px !important;">
+		<div class="container">
+			<div class="forum-theme" style="z-index: 100;">
+				<div class="forum-section">
+					<div class="forum-heading">
+						<div>
+							<ul class="breadcrumbs">
+								<li>
+									<a href="/forum">{{forum.header}}</a>
+								</li>
+								<li>
+									<a href="/forum/{{forum.before_this}}">{{forum.before_this_header}}</a>
+								</li>
+							</ul>
+							<h2 class="title title-white">{{forum.theme}}</h2>
+						</div>
+					</div>
+					<div class="forum-box">
+						<form class="create-form">
+							<p class="create-form-title">Название темы</p>
+							<input type="text" class="create-form-input name-of-theme" name="name-of-theme" placeholder="Введите название темы">
+							<p class="create-form-title">Ключевые слова</p>
+							<input type="text" class="create-form-input keywords-of-theme" name="keywords-of-theme" placeholder="Введите слова через запятые">
+							<p class="create-form-title">Текст сообщения</p>
+							<div class="create-form-message">
+								<textarea class="create-form-textarea text-of-theme" name="text-of-theme" placeholder="Введите текст сообщения..."></textarea>
+							</div>
+							<a class="btn btn-check">Создать</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}
+{% block mainScripts %}
+<script src="{{js}}particles.min.js"></script>
+<script src="{{js}}menuBurger.js"></script>
+<script>
+	particlesJS.load('particles-js', '{{js}}particles.json', function() {});
+	$('.header__logo').on('click', function(){
+	window.location.href = 'https://hydrarp.ru/';
+    });
+    var links = $('.header__link');
+    links.get(5).className = links.get(5).className + ' header__link_active';
+    $('.name-of-theme').on('input', function(){
+        let text = $('.name-of-theme').val()
+        text = text.split("`").join('’');
+        text = text.split("'").join('’');
+        text = text.split('"').join('”');
+        text = text.split('<').join('');
+        text = text.split('>').join('');
+        text = text.split('\\').join('');
+        text = text.substring(0, 50);
+        $('.name-of-theme').val(text);
+    });
+    $('.keywords-of-theme').on('input', function(){
+        let text = $('.keywords-of-theme').val()
+        text = text.split("`").join('’');
+        text = text.split("'").join('’');
+        text = text.split('"').join('”');
+        text = text.split('<').join('');
+        text = text.split('>').join('');
+        text = text.split('\\').join('');
+        text = text.substring(0, 50);
+        $('.keywords-of-theme').val(text);
+    });
+    $('.text-of-theme').on('input', function(){
+        let text = $('.text-of-theme').val()
+        text = text.split("`").join('’');
+        text = text.split("'").join('’');
+        text = text.split('"').join('”');
+        text = text.split('<').join('');
+        text = text.split('>').join('');
+        text = text.split('\\').join('');
+        text = text.substring(0, 5000);
+        $('.text-of-theme').val(text);
+    });
+	$('.btn.btn-check').on('click', function(){
+		if(!$('.name-of-theme').val().trim().length){
+			customAlertFunc(0, "Вы не заполнили название темы!");
+		} else if(!$('.keywords-of-theme').val().trim().length){
+			customAlertFunc(0, "Вы не заполнили ключевые слова!");
+		} else if(!$('.text-of-theme').val().trim().length){
+			customAlertFunc(0, "Вы не сообщение у темы!");
+		} else {
+			$.ajax({
+				url:        '/sendforummessage',
+				type:       'POST',
+				data:       $('.create-form').serialize() + '&link={{forum.link}}&secret=' + $('.captcha_key').val(),
+				success:    function(response) {
+					window.location.href = 'https://hydrarp.ru/forum/{{forum.link}}';
+					customAlertFunc(1, "Тема успешно создана!");
+				},
+				error:      function(response, exception) {
+					customAlertFunc(0, "Простите, возникла ошибка на стороне сервера. Попробуйте еще раз.");
+					grecaptcha.reset();
+                    grecaptcha.execute();
+				}
+			});
+		}
+	});
+</script>
+{% endblock %}

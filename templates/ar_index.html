@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WEBBY AR</title>
+    <meta charset='utf-8' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+  crossorigin="anonymous"></script>
+      <script src='{{js}}JeelizVTOWidget.module.js'></script>
+    <script src='{{js}}JeelizVTOWidget.js'></script>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    
+    <!-- main stylesheet: -->
+    <link rel='stylesheet' href='{{css}}JeelizVTOWidget.css' />
+
+    <script>
+      let _isResized = false;
+      function test_resizeCanvas() {
+        let halfHeightPx = Math.round(window.innerHeight / 2).toString() + 'px';
+        
+        const domWidget = document.getElementById('JeelizVTOWidget');
+        domWidget.style.maxHeight = (_isResized) ? 'none' : halfHeightPx;
+
+        _isResized = !_isResized;
+      }
+ 
+      // entry point:
+      function main() {
+        JEELIZVTOWIDGET.start({
+          sku: 'blaze_round_or_bleudegrademiroir',
+          searchImageMask: 'https://appstatic.jeeliz.com/jeewidget/images/target.png',
+          searchImageColor: 0xFFFFFF,
+          callbackReady: function(){
+            console.log('INFO: JEELIZVTOWIDGET is ready :)');
+          },
+          onError: function(errorLabel){ 
+            alert('An error happened. errorLabel =' + errorLabel)
+            switch(errorLabel) {
+              case 'NOFILE':
+              
+                break;
+
+              case 'WRONGFILEFORMAT':
+               
+                break;
+
+              case 'INVALID_SKU':
+                
+                break;
+
+              case 'FALLBACK_UNAVAILABLE':
+                
+                break;
+
+              case 'PLACEHOLDER_NULL_WIDTH':
+              case 'PLACEHOLDER_NULL_HEIGHT':
+              
+                break;
+                
+              case 'FATAL':
+              default:
+                // a bit error happens:(
+                break;
+            } 
+          } 
+        }) 
+      } 
+    </script>
+  </head>
+
+  <body onload="main()">
+    <div class='content'>
+    
+
+      <div class='header'>
+        <div class="headerTitle">
+          WEBBY
+        </div>      
+      </div>
+
+
+      
+      <div id='JeelizVTOWidget'>
+    
+        <canvas id='JeelizVTOWidgetCanvas'></canvas>
+        
+        <div class='JeelizVTOWidgetControls JeelizVTOWidgetControlsTop'>
+     
+          <button id='JeelizVTOWidgetAdjust' style="display: none;">
+            <div class="buttonIcon" style="display: none;"><i class="fas fa-arrows-alt"></i></div>редактирование посадки
+          </button>
+    
+<div id="JeeWidgetAdjustNotice">
+  
+  <button id="JeeWidgetAdjustExit">Редактирование</button>
+</div>
+       
+          <button id='buttonResizeCanvas' onclick='test_resizeCanvas();' style="display: none;">
+            <div class="buttonIcon"><i class="fas fa-sync-alt"></i></div>Изменить размер поля
+          </button>
+        </div>
+
+        <div class='JeelizVTOWidgetControls' id='JeelizVTOWidgetChangeModelContainer'>
+          <button onclick="ReadFile('./static/models/model4_fix.json', exportLoader)">Модель 1</button>
+          <button onclick="ReadFile('./static/models/model.json', exportLoader)">Модель 2</button>
+          <button onclick="JEELIZVTOWIDGET.load('rayban_aviator_or_vertFlash')">Модель 3</button>
+          <button onclick="JEELIZVTOWIDGET.load('rayban_round_cuivre_pinkBrownDegrade')">Модель 4</button>
+        </div>
+
+      
+        <div id='JeelizVTOWidgetAdjustNotice'>
+          
+          <button class='JeelizVTOWidgetBottomButton' id='JeelizVTOWidgetAdjustExit'>Quit</button>
+        </div>
+
+        <div id='JeelizVTOWidgetLoading'>
+           <div class='JeelizVTOWidgetLoadingText'>
+              Загрузка...
+            </div>
+        </div>
+   
+
+      </div>
+    </div>
+      	<script type="text/javascript">
+function ReadFile(path, func){
+    $.getJSON(path, function(data){
+        func(data);
+    });
+};
+
+function exportLoader(data){
+    exportedGlassesModel = data
+    JEELIZVTOWIDGET.load_modelStandalone(exportedGlassesModel, function(){
+        console.log('INFO: EXPORTED MODEL LOADED');
+    });
+}
+
+//вызов функции чтения JSon из файла
+ReadFile('./static/models/model4_fix.json', exportLoader)
+
+      
+
+    </script>
+  </body>
+</html>
+ 

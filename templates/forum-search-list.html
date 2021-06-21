@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="{{css}}forum-style.css" rel="stylesheet">
+<main class="main-content" style="margin-top: 80px;">
+	<section class="forum-links" style="position: relative;min-height: 500px !important;">
+		<div id="particles-js" style="position: absolute;top: 0;bottom: 0; right: 0; left: 0;"></div>
+		<div class="container">
+			<a href="/forum" class="btn btn-link link-forum">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Форум</span>
+			</a>
+			<a href="/news" class="btn btn-link btn-link-deactive link-news">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Новости</span>
+			</a>
+		</div>
+	</section>
+	<section class="forum" style="margin-top: -250px !important;">
+		<div class="container">
+			<div class="forum-theme" style="z-index: 100;">
+				<div class="forum-section">
+					<div class="forum-heading">
+						<div>
+							<ul class="breadcrumbs">
+								<li>
+									<a href="/forum">{{forum.header}}</a>
+								</li>
+							</ul>
+							<h2 class="title title-white">{{forum.theme}}</h2>
+						</div>
+						<form class="search-form">
+							<input type="search" class="search" id="search" name="search" placeholder="Поиск по форуму">
+							<span class="search-icon"></span>
+						</form>
+					</div>
+					<div class="forum-box">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}
+{% block mainScripts %}
+<script src="{{js}}menuBurger.js"></script>
+<script src="{{js}}particles.min.js"></script>
+<script>
+	particlesJS.load('particles-js', '{{js}}particles.json', function() {});
+	$('.header__logo').on('click', function(){
+	window.location.href = 'https://hydrarp.ru/';
+    });
+    var links = $('.header__link');
+    links.get(5).className = links.get(5).className + ' header__link_active';
+
+    var forum_data = '{{forum}}';
+    forum_data = JSON.parse(forum_data.split("&#39;").join('"'));
+	$('.forum-box').html('');
+	let html = '';
+	for(let i=0; i<forum_data.data.length; i++){
+		let forum_item = forum_data.data[i];
+		html += '<div class="forum-line">' +
+					'<div class="forum-category">' +
+						'<a href="/forum/' + forum_item.link + '" class="forum-category-link">' + forum_item.header + (forum_item.blocked ? '<span class="forum-category-closed"></span>' : '') + '</a>' +
+						'<div class="forum-category-desc">' +
+							'<p class="forum-category-author">Создано: <a href="' + forum_item.creator.link + '" class="author-link">' + forum_item.creator.login + '</a></p>' +
+							'<p class="forum-category-date">Дата: <time datetime="' + forum_item.creator.date + '">' + forum_item.creator.date + '</time></p>' +
+						'</div>' +
+					'</div>' +
+					'<div class="forum-desc">'
+		if(forum_item.themes_length)
+			html +=		'<div class="forum-desc-col">' +
+							'<p class="forum-desc-title">Темы</p>' +
+							'<span class="themes-count">' + forum_item.themes_length + '</span>' +
+						'</div>'
+		html +=
+						'<div class="forum-desc-col">' +
+							'<p class="forum-desc-title">Сообщения</p>' +
+							'<span class="messages-count">' + forum_item.messages_length + '</span>' +
+						'</div>'
+		if(forum_item.lastMessage.user.link.length && forum_item.lastMessage.user.name.length)
+			html +=  	'<div class="forum-desc-col">' +
+							'<p class="forum-desc-title">Последнее сообщение</p>' +
+							'<div class="last-message">' +
+								'<a href="' + forum_item.lastMessage.user.link + '" class="last-message-link">' + forum_item.lastMessage.user.name + '; </a>' +
+								'<time class="last-message-date">' + forum_item.lastMessage.date + '</time>' +
+							'</div>' +
+						'</div>'
+		html += 		'<a class="forum-edit"></a>' +
+					'</div>' +
+				'</div>'
+	}
+	$('.forum-box').append(html);
+    function messageEdit(e){
+        if(!JSON.parse(('{{current_user.is_authenticated}}').toLowerCase())) return;
+        $('.message-answer').unbind('click');
+        $('.theme-complaint').unbind('click');
+        $('.message-delete').unbind('click');
+        $('body').unbind('click');
+        $(".edit-menu").remove();
+        let edit_html = '<div class="edit-menu">' +
+                            '<a class="theme-copy-link">Поделиться</a>' +
+                            '<a class="link-red theme-complaint">Пожаловаться</a>' +
+                            (parseInt('{{current_user.admin}}') ? '<a class="link-red theme-close">' + ($(this.parentElement.parentElement).find('.forum-category-closed').length ? 'Открыть' : 'Закрыть') + '</a>' : '') +
+                        '</div>'
+        $(this.parentElement).append(edit_html);
+
+        $('.theme-copy-link').on('click', function(){
+            navigator.clipboard.writeText('https://hydrarp.ru/' + $(this.parentElement.parentElement.parentElement).find('.forum-category-link').attr('href'))
+            $(".edit-menu").remove()
+            $('body').unbind('click');
+        });
+        $('.theme-complaint').on('click', function(){
+            $(".edit-menu").remove()
+            $('body').unbind('click');
+        });
+        $('.theme-close').on('click', function(){
+            $.ajax({
+                url:        '/close_forum_theme',
+                type:       'POST',
+                data:       'link=' + $(this.parentElement.parentElement.parentElement).find('.forum-category-link').attr('href') + '&secret=' + $('.captcha_key').val(),
+                success:    function(response) {
+                    location.reload();
+                },
+                error:      function(response, exception) {
+                    location.reload();
+                }
+            });
+        });
+        setTimeout(()=>{
+			$('body').on('click', function(){
+				$(".edit-menu").remove();
+			});
+        }, 100);
+    }
+    $('.forum-edit').on('click', messageEdit);
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="{{css}}forum-style.css" rel="stylesheet">
+<main class="main-content" style="margin-top: 80px;">
+	<section class="forum-links" style="position: relative;min-height: 500px !important;">
+		<div id="particles-js" style="position: absolute;top: 0;bottom: 0; right: 0; left: 0;"></div>
+		<div class="container">
+			<a href="/forum" class="btn btn-link btn-link-deactive link-forum">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Форум</span>
+			</a>
+			<a href="/news" class="btn btn-link link-news">
+				<span class="link-icon" style="top: 20px; left: 20px !important;"></span>
+				<span class="btn-text-gradient">Новости</span>
+			</a>
+		</div>
+	</section>
+	<section class="forum" style="margin-top: -250px !important;">
+		<div class="container">
+			<div class="forum-theme" style="z-index: 100;">
+				<div class="forum-section">
+					<div class="forum-heading">
+						<div>
+							<ul class="breadcrumbs">
+								<li>
+									<a href="/news">Новости</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="news-box">
+						<div class="news-heading">
+								<h2 class="news-item-title">{{news[0].title}}</h2>
+								<p class="forum-category-date"><time datetime="{{news[0].date}}">{{news[0].date}}</time> / {{news[0].time}}</p>
+						</div>
+						<img src="{{img}}{{news[0].banner}}" class="news-item-img">
+						<div class="news-text">
+							{{news[0].text}}
+						</div>
+						<a href="/#section-main-3" class="btn btn-check">Зайти на сервер</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}
+{% block mainScripts %}
+<script src="{{js}}menuBurger.js"></script>
+<script src="{{js}}particles.min.js"></script>
+<script>
+	particlesJS.load('particles-js', '{{js}}particles.json', function() {});
+	$('.header__logo').on('click', function(){
+	window.location.href = 'https://hydrarp.ru/';
+    });
+    var links = $('.header__link');
+    links.get(5).className = links.get(5).className + ' header__link_active';
+</script>
+{% endblock %}

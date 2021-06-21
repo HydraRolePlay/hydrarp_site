@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="{{css}}forum-style.css" rel="stylesheet">
+<main class="main-content" style="margin-top: 80px;">
+	<section class="forum-links" style="position: relative; min-height: 500px !important;">
+		<div id="particles-js" style="position: absolute;top: 0;bottom: 0; right: 0; left: 0;"></div>
+		<div class="container">
+			<a href="/forum" class="btn btn-link btn-link-deactive link-forum">
+				<span class="link-icon"></span>
+				<span class="btn-text-gradient">Форум</span>
+			</a>
+			<a href="/news" class="btn btn-link link-news">
+				<span class="link-icon" style="top: 20px; left: 20px !important;"></span>
+				<span class="btn-text-gradient">Новости</span>
+			</a>
+		</div>
+	</section>
+	<section class="forum" style="margin-top: -250px !important;">
+		<div class="container">
+			<div class="news" style="z-index: 100;">
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock %}
+{% block mainScripts %}
+<script src="{{js}}menuBurger.js"></script>
+<script src="{{js}}particles.min.js"></script>
+<script>
+	particlesJS.load('particles-js', '{{js}}particles.json', function() {});
+	$('.header__logo').on('click', function(){
+	window.location.href = 'https://hydrarp.ru/';
+    });
+    var links = $('.header__link');
+    links.get(5).className = links.get(5).className + ' header__link_active';
+	var news_data = '{{news}}';
+    news_data = JSON.parse(news_data.split("&#39;").join('"'));
+	let html = '';
+	for(let i=0; i<Object.keys(news_data).length; i++){
+		let news = news_data[Object.keys(news_data)[i]][0];
+		html += '<div class="' + (news.type === 1 ? 'box-news' : 'box-news box-news-wide') + '">' +
+					'<div class="box-news-preview">' +
+						'<img src="{{img}}' + news.image + '" class="box-news-img">' +
+					'</div>' +
+					'<p class="box-news-title">' + news.title + '</p>' +
+					'<a href="/news/' + Object.keys(news_data)[i] + '" class="box-news-link">Перейти к новости</a>' +
+				'</div>'
+	}
+	$('.news').html('');
+	$('.news').append(html);
+</script>
+{% endblock %}
